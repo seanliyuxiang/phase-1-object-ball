@@ -327,3 +327,32 @@ const playerWithLongestName = gmObj => {  // takes in the game object containing
   // finally, retrieve the player's name with the longest name
   return playersNamesArr[idxOfLongestName];
 };
+
+
+
+
+// Super Bonus
+
+// Write a function that returns true if the player with the longest name had
+// the most steals. Call the function doesLongNameStealATon.
+const doesLongNameStealATon = gmObj => {  // takes in the game object containing home/away teams info
+  let homeTeamPlayersObj = gmObj.home.players;
+  let awayTeamPlayersObj = gmObj.away.players;
+
+  // combine both home and away teams' players into one object
+  let gamePlayersObj = Object.assign({}, homeTeamPlayersObj, awayTeamPlayersObj);
+
+  // initialize {playerName: mostSteals} object
+  let playerNameToMostStealsObj = { '': 0 };
+
+  // find the player with the most steals
+  for (let playerName in gamePlayersObj) {
+    if (gamePlayersObj[playerName].steals > playerNameToMostStealsObj[Object.keys(playerNameToMostStealsObj)[0]]) {
+      delete playerNameToMostStealsObj[Object.keys(playerNameToMostStealsObj)[0]];
+      playerNameToMostStealsObj[playerName] = gamePlayersObj[playerName].steals;
+    }
+  }
+
+  // compare the player name with the most steals to the player name with the longest length
+  return Object.keys(playerNameToMostStealsObj)[0] === playerWithLongestName(gmObj);
+};
