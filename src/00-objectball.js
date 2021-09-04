@@ -251,3 +251,34 @@ const bigShoeRebounds = (gmObj) => {  // takes in the game object containing hom
 };
 
 
+
+
+// Bonus Questions
+
+// Which player has the most points? Call the function mostPointsScored.
+const mostPointsScored = (gmObj) => { // takes in the game object containing home/away teams info
+  let homeTeamPlayersObj = gmObj.home.players;
+  let awayTeamPlayersObj = gmObj.away.players;
+
+  // combine both home and away teams' players into one object
+  let gamePlayersObj = Object.assign({}, homeTeamPlayersObj, awayTeamPlayersObj);
+
+  // initialize {playerName: mostPoints} object
+  let playerNameToMostPointsObj = { '': 0 };
+
+  // find the player with the most points
+  for (let playerName in gamePlayersObj) {
+    if (gamePlayersObj[playerName].points > playerNameToMostPointsObj[Object.keys(playerNameToMostPointsObj)[0]]) {
+      delete playerNameToMostPointsObj[Object.keys(playerNameToMostPointsObj)[0]];
+      playerNameToMostPointsObj[playerName] = gamePlayersObj[playerName].points;
+    }
+  }
+
+  return Object.keys(playerNameToMostPointsObj)[0];
+};
+
+// Which team has the most points? Call the function winningTeam.
+
+
+// Which player has the longest name? Call the function playerWithLongestName.
+
