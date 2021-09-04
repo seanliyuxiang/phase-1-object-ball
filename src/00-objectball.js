@@ -221,9 +221,33 @@ const playerStats = playerName => {
 };
 
 
-// // Build a function, bigShoeRebounds, that will return the number of rebounds
-// // associated with the player that has the largest shoe size.
-// const bigShoeRebounds = () => {
-//   // First, find the player with the largest shoe size
+// Build a function, bigShoeRebounds, that will return the number of rebounds
+// associated with the player that has the largest shoe size.
+const bigShoeRebounds = (gmObj) => {  // takes in the game object containing home/away teams info
+  let homeTeamPlayersObj = gmObj.home.players;
+  let awayTeamPlayersObj = gmObj.away.players;
 
-// };
+  // combine both home and away teams' players into one object
+  let gamePlayersObj = Object.assign({}, homeTeamPlayersObj, awayTeamPlayersObj);
+
+  // initialize {playerName: maxShoeSize} object
+  let playerNameToMaxShoeSizeObj = {'': 0};
+
+  // First, find the player with the largest shoe size
+  for (let playerName in gamePlayersObj) {
+    if (gamePlayersObj[playerName].shoe > playerNameToMaxShoeSizeObj[Object.keys(playerNameToMaxShoeSizeObj)[0]]) {
+      delete playerNameToMaxShoeSizeObj[Object.keys(playerNameToMaxShoeSizeObj)[0]];
+      playerNameToMaxShoeSizeObj[playerName] = gamePlayersObj[playerName].shoe;
+    }
+  }
+
+  let playerWithLargestShoe = Object.keys(playerNameToMaxShoeSizeObj)[0];
+  let largestShoeSize = Object.values(playerNameToMaxShoeSizeObj)[0];
+
+  return gamePlayersObj[playerWithLargestShoe].rebounds;
+  
+  // should return Mason Plumlee with 12 rebounds
+  // return `${gamePlayersObj[playerWithLargestShoe].rebounds} rebounds grabbed by ${playerWithLargestShoe} with max shoe size of ${largestShoeSize}`;
+};
+
+
