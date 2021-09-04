@@ -278,7 +278,52 @@ const mostPointsScored = (gmObj) => { // takes in the game object containing hom
 };
 
 // Which team has the most points? Call the function winningTeam.
+const winningTeam = (gmObj) => { // takes in the game object containing home/away teams info
+  let homeTeamPlayersObj = gmObj.home.players;
+  let awayTeamPlayersObj = gmObj.away.players;
 
+  // loop thru homeTeamPlayersObj to sum all the players' points
+  let homeTeamTotalPoints = 0;
+  for (let playerName in homeTeamPlayersObj) {
+    homeTeamTotalPoints += homeTeamPlayersObj[playerName].points;
+  }
+
+  // loop thru awayTeamPlayersObj to sum all the players' points
+  let awayTeamTotalPoints = 0;
+  for (let playerName in awayTeamPlayersObj) {
+    awayTeamTotalPoints += awayTeamPlayersObj[playerName].points;
+  }
+
+  // compare teams' total points
+  if (homeTeamTotalPoints > awayTeamTotalPoints) {
+    return gmObj.home.teamName;
+  } else if (homeTeamTotalPoints < awayTeamTotalPoints) {
+    return gmObj.away.teamName;
+  }
+
+  return "It's a tie!";
+};
 
 // Which player has the longest name? Call the function playerWithLongestName.
+const playerWithLongestName = gmObj => {  // takes in the game object containing home/away teams info
+  let homeTeamPlayersObj = gmObj.home.players;
+  let awayTeamPlayersObj = gmObj.away.players;
 
+  // combine both home and away teams' players into one object
+  let gamePlayersObj = Object.assign({}, homeTeamPlayersObj, awayTeamPlayersObj);
+
+  // get an array containing all the players' names
+  let playersNamesArr = Object.keys(gamePlayersObj);
+
+  // map playersNamesArr to get an array of lengths of players' names
+  let lengthsOfPlayersNamesArr = playersNamesArr.map(playerName => playerName.length);
+
+  // find the length of the longest name
+  let lengthOfLongestName = Math.max(...lengthsOfPlayersNamesArr);
+
+  // get the index of lengthOfLongestName in lengthsOfPlayersNamesArr
+  let idxOfLongestName = lengthsOfPlayersNamesArr.indexOf(lengthOfLongestName);
+
+  // finally, retrieve the player's name with the longest name
+  return playersNamesArr[idxOfLongestName];
+};
